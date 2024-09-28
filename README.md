@@ -1,0 +1,2 @@
+# nostrclient
+react nostr client

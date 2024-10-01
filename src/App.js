@@ -1,6 +1,8 @@
 import { useNDK } from "@nostr-dev-kit/ndk-react";
-import logo from './logo.svg';
 import './App.css';
+import {Button} from "react-bootstrap";
+import {useState} from "react";
+import Content from "./components/Content"
 
 function App() {
 
@@ -15,23 +17,19 @@ function App() {
     signPublishEvent,
   } = useNDK();
 
-  const user = await loginWithNip46('foo');
+  const [user, setUser] = useState(null)
+
+  const handleConnectClicked = async function () {
+    const user = await loginWithNip07();
+    setUser(user)
+  }
 
   return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          {
+            user == null ? <Button onClick={handleConnectClicked}>Connect</Button> : <Content user={user}/>
+          }
         </header>
       </div>
   );
